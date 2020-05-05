@@ -1,39 +1,30 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using RosSharp.RosBridgeClient.MessageTypes.MapCreator;
 
 namespace RosSharp.RosBridgeClient
 {
-    [Serializable]
-    public struct Map
-    {
-        public Vector3[] points;
-        public float[] ris;
-    }
-
     [RequireComponent(typeof(RosConnector))]
-    public class ReachabilitySubscriber : UnitySubscriber<MessageTypes.MapCreator.WorkSpace>
+    public class ReachabilitySubscriber : MonoBehaviour
     {
-        public bool IsMessageReceived { get; private set; }
+        [SerializeField] private string topic;
+        [SerializeField] private bool receiveOnce = true;
+        [SerializeField] private bool serialize = true;
+        [SerializeField] private ReachabilityMapData map;
 
-        public bool writeToFile = true;
-        public Map map;
+        private RosConnector _rosConnector;
+        private string _subscriptionId;
 
-        protected override void Start()
+        protected void Start()
         {
-            IsMessageReceived = false;
-
-            base.Start();
+            _rosConnector = GetComponent<RosConnector>();
+            _subscriptionId = _rosConnector.RosSocket.Subscribe<WorkSpace>(topic, MessageHandler);
         }
 
-        protected override void ReceiveMessage(MessageTypes.MapCreator.WorkSpace message)
+        private void MessageHandler(WorkSpace message)
         {
-            //if (IsMessageReceived)
-            //    return;
-
-            IsMessageReceived = true;
-
-            map = new Map();
+            map = new ReachabilityMapData();
             map.points = new Vector3[message.WsSpheres.Length];
             map.ris = new float[message.WsSpheres.Length];
 
@@ -43,24 +34,29 @@ namespace RosSharp.RosBridgeClient
                 map.ris[i] = message.WsSpheres[i].ri;
             }
 
-            if (writeToFile)
+            if (serialize)
                 Serialize();
+
+            if (receiveOnce)
+                _rosConnector.RosSocket.Unsubscribe(_subscriptionId);
         }
 
-        private Vector3 GetPoint(MessageTypes.MapCreator.WsSphere message)
+        private Vector3 GetPoint(WsSphere message)
         {
             return new Vector3(message.point.x, message.point.y, message.point.z);
         }
 
         private void Serialize()
         {
-            string path = @"C:\Temp";
+            string path = Application.dataPath + "/Resources";
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
             string mapJson = JsonUtility.ToJson(map, true);
             File.WriteAllText(path + "/map.json", mapJson);
-        }       
+
+            Debug.Log("Map stored at " + path);
+        }
     }
 }

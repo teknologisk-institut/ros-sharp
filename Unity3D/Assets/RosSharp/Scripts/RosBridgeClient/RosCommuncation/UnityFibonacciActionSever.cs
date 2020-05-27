@@ -30,7 +30,7 @@ namespace RosSharp.RosBridgeClient.Actionlib
         private void Start()
         {
             rosConnector = GetComponent<RosConnector>();
-            fibonacciActionServer = new FibonacciActionServer(actionName, rosConnector.RosSocket, new Log(x => Debug.Log(x)));
+            fibonacciActionServer = new FibonacciActionServer(actionName, rosConnector.RosSocket, new Log(x => UnityEngine.Debug.Log(x)));
             fibonacciActionServer.Initialize();
         }
 

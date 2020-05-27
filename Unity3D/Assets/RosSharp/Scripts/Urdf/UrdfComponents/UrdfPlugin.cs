@@ -45,7 +45,7 @@ namespace RosSharp.Urdf
             }
             catch (XmlException e)
             {
-                Debug.LogWarning("UrdfPlugin contains invalid XML. The contents of this plugin will not be " +
+                UnityEngine.Debug.LogWarning("UrdfPlugin contains invalid XML. The contents of this plugin will not be " +
                                  "written to the URDF file.\nXML Error: " + e.Message, this);
                 return null;
             }

@@ -67,7 +67,7 @@ namespace RosSharp.Urdf.Editor
         {
             if (!urdfPath.StartsWith(@"package://"))
             {
-                Debug.LogWarning(urdfPath + " is not a valid URDF package file path. Path should start with \"package://\".");
+                UnityEngine.Debug.LogWarning(urdfPath + " is not a valid URDF package file path. Path should start with \"package://\".");
                 return null;
             }
 

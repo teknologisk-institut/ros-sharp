@@ -88,7 +88,7 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                         {
                             foreach (string w in warnings)
                             {
-                                Debug.LogWarning(w);
+                                UnityEngine.Debug.LogWarning(w);
                             }
                             EditorUtility.DisplayDialog(
                                 title: "Code Generation Complete",
@@ -98,7 +98,7 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                     }
                     catch (MessageTokenizerException e)
                     {
-                        Debug.LogError(e.ToString() + e.Message);
+                        UnityEngine.Debug.LogError(e.ToString() + e.Message);
                         EditorUtility.DisplayDialog(
                             title: "Message Tokenizer Exception",
                             message: e.Message,
@@ -106,7 +106,7 @@ namespace RosSharp.RosBridgeClient.MessageGeneration
                     }
                     catch (MessageParserException e)
                     {
-                        Debug.LogError(e.ToString() + e.Message);
+                        UnityEngine.Debug.LogError(e.ToString() + e.Message);
                         EditorUtility.DisplayDialog(
                             title: "Message Parser Exception",
                             message: e.Message,

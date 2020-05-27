@@ -59,7 +59,7 @@ namespace RosSharp.Urdf.Editor
                     UrdfJoint.Create(urdfLink.gameObject, UrdfJoint.GetJointType(joint.type), joint);
             }
             else if (joint != null)
-                Debug.LogWarning("No Joint Component will be created in GameObject \"" + urdfLink.gameObject.name + "\" as it has no Rigidbody Component.\n"
+                UnityEngine.Debug.LogWarning("No Joint Component will be created in GameObject \"" + urdfLink.gameObject.name + "\" as it has no Rigidbody Component.\n"
                                  + "Please define an Inertial for Link \"" + link.name + "\" in the URDF file to create a Rigidbody Component.\n", urdfLink.gameObject);
 
             foreach (Joint childJoint in link.joints)
@@ -72,7 +72,7 @@ namespace RosSharp.Urdf.Editor
         public static Link ExportLinkData(this UrdfLink urdfLink)
         {
             if(urdfLink.transform.localScale != Vector3.one)
-                Debug.LogWarning("Only visuals should be scaled. Scale on link \"" + urdfLink.gameObject.name + "\" cannot be saved to the URDF file.", urdfLink.gameObject);
+                UnityEngine.Debug.LogWarning("Only visuals should be scaled. Scale on link \"" + urdfLink.gameObject.name + "\" cannot be saved to the URDF file.", urdfLink.gameObject);
 
             UrdfInertial urdfInertial = urdfLink.gameObject.GetComponent<UrdfInertial>();
             Link link = new Link(urdfLink.gameObject.name)

@@ -7,7 +7,7 @@
  * <https://github.com/siemens/ros-sharp> 
  */
 
-using Newtonsoft.Json;
+
 
 using RosSharp.RosBridgeClient.MessageTypes.Std;
 using RosSharp.RosBridgeClient.MessageTypes.Geometry;
@@ -16,13 +16,12 @@ namespace RosSharp.RosBridgeClient.MessageTypes.MapCreator
 {
     public class WsSphere : Message
     {
-        [JsonIgnore]
         public const string RosMessageName = "map_creator/WsSphere";
 
-        public Header header;
-        public Point32 point;
-        public float ri;
-        public Pose[] poses;
+        public Header header { get; set; }
+        public Point32 point { get; set; }
+        public float ri { get; set; }
+        public Pose[] poses { get; set; }
 
         public WsSphere()
         {

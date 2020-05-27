@@ -45,7 +45,7 @@ namespace RosSharp.RosBridgeClient
         {
             if (Path.GetExtension(urdfPath)?.ToLowerInvariant() != ".urdf")
             {
-                Debug.LogWarning("Please select a valid URDF file to publish.");
+                UnityEngine.Debug.LogWarning("Please select a valid URDF file to publish.");
                 return;
             }
                         
@@ -59,7 +59,7 @@ namespace RosSharp.RosBridgeClient
 
             if (!StatusEvents["connected"].WaitOne(timeout * 1000))
             {
-                Debug.LogWarning("Failed to connect to " + serverUrl + " before timeout.");
+                UnityEngine.Debug.LogWarning("Failed to connect to " + serverUrl + " before timeout.");
                 RosSocket.Close();
                 return;
             }

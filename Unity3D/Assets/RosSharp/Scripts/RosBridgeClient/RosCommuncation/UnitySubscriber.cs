@@ -37,12 +37,11 @@ namespace RosSharp.RosBridgeClient
         {
 
             if (!rosConnector.IsConnected.WaitOne(SecondsTimeout * 1000))
-                Debug.LogWarning("Failed to subscribe: RosConnector not connected");
+                UnityEngine.Debug.LogWarning("Failed to subscribe: RosConnector not connected");
 
             rosConnector.RosSocket.Subscribe<T>(Topic, ReceiveMessage, (int)(TimeStep * 1000)); // the rate(in ms in between messages) at which to throttle the topics
         }
 
         protected abstract void ReceiveMessage(T message);
-
     }
 }

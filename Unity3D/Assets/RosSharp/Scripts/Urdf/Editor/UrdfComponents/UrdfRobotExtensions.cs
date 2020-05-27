@@ -45,7 +45,7 @@ namespace RosSharp.Urdf.Editor
 
             if (!UrdfAssetPathHandler.IsValidAssetPath(robot.filename))
             {
-                Debug.LogError("URDF file and ressources must be placed in Assets Folder:\n" + Application.dataPath);
+                UnityEngine.Debug.LogError("URDF file and ressources must be placed in Assets Folder:\n" + Application.dataPath);
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace RosSharp.Urdf.Editor
 
             robot.WriteToUrdf();
 
-            Debug.Log(robot.name + " was exported to " + UrdfExportPathHandler.GetExportDestination());
+            UnityEngine.Debug.Log(robot.name + " was exported to " + UrdfExportPathHandler.GetExportDestination());
 
             UrdfMaterial.Materials.Clear();
             UrdfExportPathHandler.Clear();

@@ -317,13 +317,13 @@ namespace RosSharp.Urdf.Editor
             Transform childTransform = transform.GetChild(0);
             if (IsTransformed(childTransform, type))
             {
-                Debug.LogWarning("Changes to the transform of " + childTransform.name + " cannot be exported to URDF. " +
+                UnityEngine.Debug.LogWarning("Changes to the transform of " + childTransform.name + " cannot be exported to URDF. " +
                                  "Make any translation, rotation, or scale changes to the parent Visual or Collision object instead.",
                     childTransform);
             }
 
             if (!transform.HasExactlyOneChild())
-                Debug.LogWarning("Only one Geometry element is allowed for each Visual or Collision element. In "
+                UnityEngine.Debug.LogWarning("Only one Geometry element is allowed for each Visual or Collision element. In "
                                  + transform.parent.parent.name + ", move each Geometry into its own Visual or Collision.", transform);
         }
 

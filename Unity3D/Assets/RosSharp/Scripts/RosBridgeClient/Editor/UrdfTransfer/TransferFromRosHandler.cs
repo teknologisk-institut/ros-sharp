@@ -63,7 +63,7 @@ namespace RosSharp.RosBridgeClient
 
             if (!StatusEvents["connected"].WaitOne(timeout * 1000))
             {
-                Debug.LogWarning("Failed to connect to ROS before timeout");
+                UnityEngine.Debug.LogWarning("Failed to connect to ROS before timeout");
                 return;
             }
 
@@ -88,9 +88,9 @@ namespace RosSharp.RosBridgeClient
 
             // import URDF assets:
             if (StatusEvents["resourceFilesReceived"].WaitOne(timeout * 1000))
-                Debug.Log("Imported urdf resources to " + localDirectory);
+                UnityEngine.Debug.Log("Imported urdf resources to " + localDirectory);
             else
-                Debug.LogWarning("Not all resource files have been received before timeout.");
+                UnityEngine.Debug.LogWarning("Not all resource files have been received before timeout.");
 
             rosSocket.Close();
         }

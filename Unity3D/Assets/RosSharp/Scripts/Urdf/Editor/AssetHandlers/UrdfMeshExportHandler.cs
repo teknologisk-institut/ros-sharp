@@ -97,14 +97,14 @@ namespace RosSharp.Urdf.Editor
 
         private static string CreateNewStlFile(GameObject geometryObject, bool isCollisionGeometry)
         {
-            Debug.Log("Did not find an existing STL or DAE file for Geometry Mesh "
+            UnityEngine.Debug.Log("Did not find an existing STL or DAE file for Geometry Mesh "
                       + geometryObject.name + ". Exporting a new STL file.", geometryObject);
 
             string newMeshPath = UrdfExportPathHandler.GetNewMeshPath(geometryObject.name + ".stl");
 
             StlExporter stlExporter = new StlExporter(newMeshPath, geometryObject, isCollisionGeometry);
             if (!stlExporter.Export())
-                Debug.LogWarning("Mesh export for geometry " + geometryObject.name + " failed.", geometryObject);
+                UnityEngine.Debug.LogWarning("Mesh export for geometry " + geometryObject.name + " failed.", geometryObject);
 
             return newMeshPath;
         }

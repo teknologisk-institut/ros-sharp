@@ -56,7 +56,7 @@ namespace RosSharp.Urdf
 		    }
 		    catch (System.Exception e)
 		    {
-		        Debug.LogError(e.ToString());
+                UnityEngine.Debug.LogError(e.ToString());
 		        return false;
 		    }
 		}

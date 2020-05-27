@@ -1,33 +1,54 @@
 ﻿using System.Collections.Generic;
-using RosSharp.RosBridgeClient;
-using MessageTypes = RosSharp.RosBridgeClient.MessageTypes;
 using UnityEngine;
+using RosSharp.Urdf;
 
-public class JointStateSubscriberCustom : UnitySubscriber<MessageTypes.Sensor.JointState>
+namespace RosSharp.RosBridgeClient
 {
-
-    [HideInInspector] public string[] JointNames;
-    [HideInInspector] public float[] Velocities;
-    [HideInInspector] public float[] Positions;
-    [HideInInspector] public float[] Efforts;
-    [HideInInspector] public bool MessageReceived = false;
-
-    protected override void ReceiveMessage(MessageTypes.Sensor.JointState message)
+    public class JointStateSubscriberCustom : UnitySubscriber<MessageTypes.Sensor.JointState>
     {
-        if (!MessageReceived)
-            MessageReceived = true;
+        public UrdfRobot _urdfRobot;
+        public List<string> JointNames;
+        public bool MessageReceived = false;
 
-        JointNames = new string[message.name.Length];
-        Velocities = new float[message.name.Length];
-        Positions = new float[message.name.Length];
-        Efforts = new float[message.name.Length];
+        [HideInInspector] public Dictionary<string, float> Velocities;
+        [HideInInspector] public Dictionary<string, float> Positions;
+        [HideInInspector] public Dictionary<string, float> Efforts;
 
-        for (int i = 0; i < message.name.Length; i++)
+        private void Awake()
         {
-            JointNames[i] = message.name[i];
-            Velocities[i] = (float) message.velocity[i];
-            Positions[i] = (float) message.position[i];
-            Efforts[i] = (float) message.effort[i];
+            JointNames = new List<string>();
+            Velocities = new Dictionary<string, float>();
+            Positions = new Dictionary<string, float>();
+            Efforts = new Dictionary<string, float>();
+
+            foreach (UrdfJoint urdfJoint in _urdfRobot.GetComponentsInChildren<UrdfJoint>())
+            {
+                if (urdfJoint.JointType != UrdfJoint.JointTypes.Fixed)
+                {
+                    JointNames.Add(urdfJoint.JointName);
+                    Velocities[urdfJoint.JointName] = 0f;
+                    Positions[urdfJoint.JointName] = 0f;
+                    Efforts[urdfJoint.JointName] = 0f;
+                }
+            }
+        }
+
+        protected override void ReceiveMessage(MessageTypes.Sensor.JointState message)
+        {
+            if (!MessageReceived)
+                MessageReceived = true;
+
+            int index;
+            for (int i = 0; i < message.name.Length; i++)
+            {
+                index = JointNames.IndexOf(message.name[i]);
+                if (index != -1)
+                {
+                    Velocities[JointNames[i]] = (float) message.velocity[i];
+                    Positions[JointNames[i]] = (float) message.position[i];
+                    Efforts[JointNames[i]] = (float) message.effort[i];
+                }
+            }
         }
     }
 }

@@ -266,16 +266,16 @@ namespace RosSharp.Urdf
         private void CheckForUrdfCompatibility()
         {
             if (!AreLimitsCorrect())
-                Debug.LogWarning("Limits are not defined correctly for Joint " + JointName + " in Link " + name +
-                                 ". This may cause problems when visualizing the robot in RVIZ or Gazebo.", 
+                UnityEngine.Debug.LogWarning("Limits are not defined correctly for Joint " + JointName + " in Link " + name +
+                                 ". This may cause problems when visualizing the robot in RVIZ or Gazebo.",
                                  gameObject);
             if (!IsJointAxisDefined())
-                Debug.LogWarning("Axis for joint " + JointName + " is undefined. Axis will not be written to URDF, " +
-                                 "and the default axis will be used instead.", 
+                UnityEngine.Debug.LogWarning("Axis for joint " + JointName + " is undefined. Axis will not be written to URDF, " +
+                                 "and the default axis will be used instead.",
                                  gameObject);
             if(IsAnchorTransformed())
-                Debug.LogWarning("The anchor position defined in the joint connected to " + name + " will be" +
-                                 " ignored in URDF. Instead of modifying anchor, change the position of the link.", 
+                UnityEngine.Debug.LogWarning("The anchor position defined in the joint connected to " + name + " will be" +
+                                 " ignored in URDF. Instead of modifying anchor, change the position of the link.",
                                  gameObject);
         }
 
